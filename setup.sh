@@ -29,3 +29,9 @@ if ! type -p brew > /dev/null; then
     ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
     brew install git ruby-build rbenv nodejs
 fi
+
+
+# Clone Nano Syntax Highlighting Files
+if [ ! -d "~/.nano" ]; then
+    git clone https://github.com/marcusmyers/nanorc.git ~/.nano
+fi
