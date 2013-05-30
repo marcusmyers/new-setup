@@ -33,6 +33,7 @@ fi
 
 # Clone Nano Syntax Highlighting Files
 if [ ! -d "~/.nano" ]; then
-    git clone https://github.com/marcusmyers/nanorc.git ~/.nano
-    mv ./.nanorc ../.nanorc
+    git clone https://github.com/marcusmyers/nanorc.git
+    ln -s ./.nano ../.nano
+    ln -s ./.nanorc ../.nanorc
 fi
