@@ -17,7 +17,7 @@ fi
 
 # Check if PHP is installed
 if ! type -p php > /dev/null; then
-    curl -s http://php-osx.liip.ch/install.sh | bash -s 5.3
+    curl -s http://php-osx.liip.ch/install.sh | bash -s 5.4
 fi
 
 # Check if Composer is installed
