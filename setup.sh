@@ -49,10 +49,3 @@ if [ ! -d "~/.nano" ]; then
     ln -s ./.nanorc ../.nanorc
 fi
 
-
-
-
-# Link .bash_ps1 file
-if [ ! -f "~/.bash_ps1" ]; then
-    ln -s ./.bash_ps1 ../.bash_ps1
-fi
