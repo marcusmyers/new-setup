@@ -66,11 +66,11 @@ if ! type -p gcc > /dev/null; then
 fi
 
 # Check if PHP is installed
-if ! type -p php > /dev/null; then
-    echo -e "\xe2\x9c\x97 PHP is not installed.  Installing now"
+#if ! type -p php > /dev/null; then
+    echo -e "\xe2\x9c\x97 Installing latest version of php now"
     curl -s http://php-osx.liip.ch/install.sh | bash -s 5.6
     echo -e "\xe2\x9c\x93 PHP is installed"
-fi
+#fi
 
 # Check if Composer is installed
 if ! type -p composer > /dev/null; then
