@@ -60,6 +60,30 @@ if ! type -p gcc > /dev/null; then
     xcode-select --install
 fi
 
+# Check if Homebrew is installed and then install all
+# ruby pre-requisites 
+if ! type -p brew > /dev/null; then
+  echo "--- Installing Homebrew.."
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  sleep 5
+  brew update
+  sleep 5
+  brew tap homebrew/dupes
+  sleep 5
+  brew install nano rbenv ruby-build mysql 
+  sleep 5
+  rbenv init 
+  echo -e "\xe2\x9c\x93 Homebrew is installed"
+fi
+
+# Install Ruby Version
+echo "--- Installing Ruby ${RUBY_VERSION}..."
+rbenv install ${RUBY_VERSION}
+echo -e "\xe2\x9c\x93 Ruby ${RUBY_VERSION} is installed"
+
+# Install bash completion for Mac OS X
+brew install bash-completion
+
 # Check if PHP is installed
 if [ ! -d /usr/local/php5 ]; then
     echo -e "\xe2\x9c\x97 Installing latest version of php now"
@@ -113,30 +137,6 @@ if ! type -p node > /dev/null; then
   echo -e "\xe2\x9c\x93 Node is installed"
   rm node-${NODE_VERSION}.pkg
 fi
-
-# Check if Homebrew is installed and then install all
-# ruby pre-requisites 
-if ! type -p brew > /dev/null; then
-  echo "--- Installing Homebrew.."
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  sleep 5
-  brew update
-  sleep 5
-  brew tap homebrew/dupes
-  sleep 5
-  brew install nano rbenv ruby-build mysql 
-  sleep 5
-  rbenv init 
-  echo -e "\xe2\x9c\x93 Homebrew is installed"
-fi
-
-# Install Ruby Version
-echo "--- Installing Ruby ${RUBY_VERSION}..."
-rbenv install ${RUBY_VERSION}
-echo -e "\xe2\x9c\x93 Ruby ${RUBY_VERSION} is installed"
-
-# Install bash completion for Mac OS X
-brew install bash-completion
 
 # Clone Nano Syntax Highlighting Files
 if [ ! -d "~/.nano" ]; then
