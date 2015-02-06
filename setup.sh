@@ -80,7 +80,7 @@ fi
 # if not install it
 if ! type -p vboxmanage > /dev/null; then
   echo "--- Installing VirtualBox..."
-  install_dmg "VirtualBox" ${VIRTUALBOX_URL} "/Volumes/Macintosh HD"
+  install_dmg "VirtualBox" ${VIRTUALBOX_URL} "/Volumes/Macintosh\ HD"
   curl -O ${VBOX_EXTPACK_URL}
   VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}-${VBOX_PATCH}.vbox-extpack
   echo -e "\xe2\x9c\x93 VirtualBox is installed"
