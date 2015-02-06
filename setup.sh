@@ -32,7 +32,7 @@ function install_dmg() {
 
   echo "Installing: ${name}"
 
-  if ${name} = "VirtualBox"; then
+  if [ "$name" == "VirtualBox" ]; then
     target="/Volumes/Macintosh\ HD/"
   fi
 
