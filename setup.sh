@@ -103,7 +103,7 @@ fi
 # if not install it
 if [ ! -d "/Applications/Atom.app" ]; then
   echo "--- Installing Atom..."
-  curl -L ${ATOM_URL}
+  curl -LO ${ATOM_URL}
   mv mac ./atom-mac.zip
   unzip atom-mac.zip
   mv Atom.app /Applications/Atom.app
