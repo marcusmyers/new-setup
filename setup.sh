@@ -81,6 +81,7 @@ fi
 echo "--- Installing Ruby ${RUBY_VERSION}..."
 rbenv install ${RUBY_VERSION}
 echo -e "\xe2\x9c\x93 Ruby ${RUBY_VERSION} is installed"
+rbenv global ${RUBY_VERSION}
 
 # Install bash completion for Mac OS X
 brew install bash-completion
