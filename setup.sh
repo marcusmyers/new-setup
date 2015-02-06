@@ -39,7 +39,7 @@ fi
 if ! type -p node > /dev/null; then
   echo "Attempting to install node from ${NODE_PACKAGE_URL}"
   curl -O ${NODE_PACKAGE_URL}
-  installer -pkg node-${NODE_VERSION}.pkg -target / >/dev/null  
+  sudo installer -pkg node-${NODE_VERSION}.pkg -target / >/dev/null  
   echo -e "\xe2\x9c\x93 Node is installed"
 fi
 
