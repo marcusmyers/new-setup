@@ -12,6 +12,8 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
 
+eval "$(rbenv init -)"
+
 ## Add .aliases to profile
 if [ -f "$HOME/.aliases" ]; then
   . "$HOME/.aliases"

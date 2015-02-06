@@ -13,6 +13,7 @@
 #--------------------------------------------------------------------
 NODE_VERSION=${NODE_VERSION:-"v0.10.36"}
 NODE_PACKAGE_URL=${NODE_PACKAGE_URL:-"http://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}.pkg"}
+RUBY_VERSION=${RUBY_VERSION:-"2.1.5"}
 
 # Make sure XCode Command Line Tools are installed
 # before we do anything else - install if not
@@ -30,8 +31,9 @@ fi
 
 # Check if Composer is installed
 if ! type -p composer > /dev/null; then
-    echo "### INSTALLING Composer ###"
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer  
+  echo "--- Installing Composer..."
+  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer  
+  echo -e "\xe2\x9c\x93 Composer is installed"
 fi
 
 
@@ -41,15 +43,25 @@ if ! type -p node > /dev/null; then
   curl -O ${NODE_PACKAGE_URL}
   sudo installer -pkg node-${NODE_VERSION}.pkg -target / >/dev/null  
   echo -e "\xe2\x9c\x93 Node is installed"
+  rm node-${NODE_VERSION}.pkg
 fi
 
 # Check if Homebrew is installed and then install all
 # ruby pre-requisites 
 if ! type -p brew > /dev/null; then
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    brew tap homebrew/dupes
-    brew install nano 
+  echo "--- Installing Homebrew.."
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  brew update
+  brew tap homebrew/dupes
+  brew install nano rbenv ruby-build 
+  rbenv init 
+  echo -e "\xe2\x9c\x93 Homebrew is installed"
 fi
+
+# Install Ruby Version
+echo "--- Installing Ruby ${RUBY_VERSION}..."
+rbenv install ${RUBY_VERSION}
+echo -e "\xe2\x9c\x93 Ruby ${RUBY_VERSION} is installed"
 
 # Install bash completion for Mac OS X
 brew install bash-completion
@@ -62,7 +74,23 @@ if [ ! -d "~/.nano" ]; then
     cp ./.nanorc ~/.nanorc
 fi
 
-echo "### INSTALLING GEMS ###"
+echo "---Copy over alias and bash profile files..."
+cp ./.bash_profile ~/
+cp ./.aliases ~/
+cp ./.bash_ps1 ~/
+echo -e "\xe2\x9c\x93 Copied over aliases and bash profiles"
+
+
+# Clone Unixorn Luggage and make
+if [ ! -d "/usr/local/share/luggage" ]; then
+  echo "--- Installing the luggage..."
+  git clone https://github.com/unixorn/luggage.git
+  cd luggage
+  make bootstrap_files
+  echo -e "\xe2\x9c\x93 luggage is installed"
+fi
+
+echo "---INSTALLING GEMS---"
 echo "--- Installing librarian-puppet gem..."
 gem install librarian-puppet
 echo -e "\xe2\x9c\x93 librarian-puppet is installed"
@@ -87,3 +115,5 @@ echo -e "\xe2\x9c\x93 bundler is installed"
 echo "--- Installing aws-sdk gem..."
 gem install aws-sdk
 echo -e "\xe2\x9c\x93 aws-sdk is installed"
+
+
