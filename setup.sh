@@ -71,7 +71,8 @@ fi
 # Check if Composer is installed
 if ! type -p composer > /dev/null; then
   echo "--- Installing Composer..."
-  sudo curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer  
+  sudo mkdir -p /usr/local/bin
+  sudo curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer  
   echo -e "\xe2\x9c\x93 Composer is installed"
 fi
 
