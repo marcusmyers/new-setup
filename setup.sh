@@ -12,7 +12,7 @@
 # Modifiable variables, please set them via environmental variables.
 #--------------------------------------------------------------------
 NODE_VERSION=${NODE_VERSION:-"v0.10.36"}
-NODE_PACKAGE_URL=${FACTER_PACKAGE_URL:-"http://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}.pkg"}
+NODE_PACKAGE_URL=${NODE_PACKAGE_URL:-"http://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}.pkg"}
 
 # Make sure XCode Command Line Tools are installed
 # before we do anything else - install if not
@@ -39,25 +39,22 @@ fi
 
 # Check if node.js is installed
 if ! type -p node > /dev/null; then
+  echo "Attempting to install node from ${NODE_PACKAGE_URL}"
   curl -O ${NODE_PACKAGE_URL}
   installer -pkg node-${NODE_VERSION}.pkg -target / >/dev/null  
+  echo -e "\xe2\x9c\x93 Node is installed"
 fi
 
 # Check if Homebrew is installed and then install all
 # ruby pre-requisites 
 if ! type -p brew > /dev/null; then
-    ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     brew tap homebrew/dupes
-    brew install git nano 
+    brew install nano 
 fi
 
 # Install bash completion for Mac OS X
 brew install bash-completion
-echo "Add the following lines to your ~/.bash_profile:"
-echo "  if [ -f $(brew --prefix)/etc/bash_completion ]; then"
-echo "    . $(brew --prefix)/etc/bash_completion"
-echo "  fi"
-
 
 # Clone Nano Syntax Highlighting Files
 if [ ! -d "~/.nano" ]; then
