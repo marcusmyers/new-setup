@@ -95,14 +95,14 @@ fi
 # Check if Composer is installed
 if ! type -p composer > /dev/null; then
   echo "--- Installing Composer..."
-  sudo mkdir -p /usr/local/bin
-  sudo curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer  
+  mkdir -p /usr/local/bin
+  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer  
   echo -e "\xe2\x9c\x93 Composer is installed"
 fi
 
 # Check if VritualBox is installed
 # if not install it
-if ! type -p vboxmanage > /dev/null; then
+if [ ! -d /Applications/VirtualBox.app/ ]; then
   echo "--- Installing VirtualBox..."
   curl -O ${VBOX_EXTPACK_URL}
   install_dmg "VirtualBox" ${VIRTUALBOX_URL} 
