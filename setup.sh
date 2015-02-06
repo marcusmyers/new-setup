@@ -32,7 +32,7 @@ function install_dmg() {
 
   echo "Installing: ${name}"
 
-  if $name == "VirtualBox"; then
+  if ${name} = "VirtualBox"; then
     target="/Volumes/Macintosh\ HD/"
   fi
 
@@ -103,7 +103,8 @@ fi
 # if not install it
 if [ ! -d "/Applications/Atom.app" ]; then
   echo "--- Installing Atom..."
-  curl -LO ${ATOM_URL}
+  curl -L ${ATOM_URL}
+  mv mac ./atom-mac.zip
   unzip atom-mac.zip
   mv Atom.app /Applications/Atom.app
   echo -e "\xe2\x9c\x93 Atom is installed"
