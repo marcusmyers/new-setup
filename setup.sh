@@ -121,7 +121,7 @@ if ! type -p brew > /dev/null; then
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   brew update
   brew tap homebrew/dupes
-  brew install nano rbenv ruby-build 
+  brew install nano rbenv ruby-build mysql 
   rbenv init 
   echo -e "\xe2\x9c\x93 Homebrew is installed"
 fi
