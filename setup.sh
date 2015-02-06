@@ -65,6 +65,7 @@ fi
 if ! type -p brew > /dev/null; then
   echo "--- Installing Homebrew.."
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  brew doctor
   sleep 5
   brew update
   sleep 5
