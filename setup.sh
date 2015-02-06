@@ -47,7 +47,7 @@ function install_dmg() {
   # Install. It will be the only pkg in there, so just find any pkg
   echo "-- Installing pkg..."
   pkg_path=$(find ${mount_point} -name '*.pkg' -mindepth 1 -maxdepth 1)
-  installer -pkg ${pkg_path} -target ${target:"/"} >/dev/null
+  installer -pkg ${pkg_path} -target ${target:/} >/dev/null
 
   # Unmount
   echo "-- Unmounting and ejecting DMG..."
@@ -99,7 +99,7 @@ fi
 # if not install it
 if [ ! -d "/Applications/Atom.app" ]; then
   echo "--- Installing Atom..."
-  curl -O -L ${ATOM_URL}
+  curl -LO ${ATOM_URL}
   unzip atom-mac.zip
   mv Atom.app /Applications/Atom.app
   echo -e "\xe2\x9c\x93 Atom is installed"
