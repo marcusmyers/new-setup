@@ -32,6 +32,10 @@ function install_dmg() {
 
   echo "Installing: ${name}"
 
+  if $name == "VirtualBox"; then
+    target="/Volumes/Macintosh\ HD/"
+  fi
+
   # Download the package into the temporary directory
   echo "-- Downloading DMG..."
   curl -L -o ${dmg_path} ${url} 2>/dev/null
