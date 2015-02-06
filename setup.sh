@@ -27,14 +27,9 @@ ATOM_URL=${ATOM_URL:-"https://atom.io/download/mac"}
 function install_dmg() {
   local name="$1"
   local url="$2"
-  local target="$3"
   local dmg_path=$(mktemp -t ${name}_dmg)
 
   echo "Installing: ${name}"
-
-  if [ "$name" == "VirtualBox" ]; then
-    target="/Volumes/Macintosh\ HD/"
-  fi
 
   # Download the package into the temporary directory
   echo "-- Downloading DMG..."
@@ -51,7 +46,7 @@ function install_dmg() {
   # Install. It will be the only pkg in there, so just find any pkg
   echo "-- Installing pkg..."
   pkg_path=$(find ${mount_point} -name '*.pkg' -mindepth 1 -maxdepth 1)
-  installer -pkg ${pkg_path} -target ${target:-"/"} >/dev/null
+  installer -pkg ${pkg_path} -target / >/dev/null
 
   # Unmount
   echo "-- Unmounting and ejecting DMG..."
@@ -85,7 +80,7 @@ fi
 if ! type -p vboxmanage > /dev/null; then
   echo "--- Installing VirtualBox..."
   curl -O ${VBOX_EXTPACK_URL}
-  install_dmg "VirtualBox" ${VIRTUALBOX_URL} "/Volumes/Macintosh\ HD"
+  install_dmg "VirtualBox" ${VIRTUALBOX_URL} 
   VBoxManage extpack install ./Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}-${VBOX_PATCH}.vbox-extpack
   echo -e "\xe2\x9c\x93 VirtualBox is installed"
   rm ./Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}-${VBOX_PATCH}.vbox-extpack
