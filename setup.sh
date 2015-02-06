@@ -1,4 +1,4 @@
-#!/bin/bash
+w#!/bin/bash
 
 #
 # This file must be ran as root
@@ -96,7 +96,6 @@ fi
 # Check if Composer is installed
 if ! type -p composer > /dev/null; then
   echo "--- Installing Composer..."
-  mkdir -p /usr/local/bin
   curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer  
   echo -e "\xe2\x9c\x93 Composer is installed"
 fi
@@ -107,9 +106,9 @@ if [ ! -d /Applications/VirtualBox.app/ ]; then
   echo "--- Installing VirtualBox..."
   curl -O ${VBOX_EXTPACK_URL}
   install_dmg "VirtualBox" ${VIRTUALBOX_URL} 
-  VBoxManage extpack install ./Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}-${VBOX_PATCH}.vbox-extpack
+
+  sleep 10
   echo -e "\xe2\x9c\x93 VirtualBox is installed"
-  rm ./Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}-${VBOX_PATCH}.vbox-extpack
 fi
 
 # Check if Vagrant is installed
@@ -117,6 +116,8 @@ fi
 if ! type -p vagrant > /dev/null; then
   echo "--- Installing Vagrant..."
   install_dmg "Vagrant" ${VAGRANT_URL}
+
+  sleep 10
   echo -e "\xe2\x9c\x93 Vagrant is installed"
 fi
 
@@ -125,9 +126,13 @@ fi
 if [ ! -d "/Applications/Atom.app" ]; then
   echo "--- Installing Atom..."
   curl -LO ${ATOM_URL}
+  sleep 5
   mv mac ./atom-mac.zip
+  sleep 5
   unzip atom-mac.zip
+  sleep 5
   mv Atom.app /Applications/Atom.app
+  sleep 5
   echo -e "\xe2\x9c\x93 Atom is installed"
 fi 
 
