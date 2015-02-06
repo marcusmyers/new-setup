@@ -7,7 +7,7 @@
 # useful unicode chars:
 #✓ \xe2\x9c\x93
 #✗ \xe2\x9c\x97
-
+http://download.virtualbox.org/virtualbox/4.3.20/Oracle_VM_VirtualBox_Extension_Pack-4.3.20-96996.vbox-extpack
 #--------------------------------------------------------------------
 # Modifiable variables, please set them via environmental variables.
 #--------------------------------------------------------------------
@@ -80,9 +80,9 @@ fi
 # if not install it
 if ! type -p vboxmanage > /dev/null; then
   echo "--- Installing VirtualBox..."
-  install_dmg "VirtualBox" ${VIRTUALBOX_URL} "/Volumes/Macintosh\ HD"
   curl -O ${VBOX_EXTPACK_URL}
-  VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}-${VBOX_PATCH}.vbox-extpack
+  install_dmg "VirtualBox" ${VIRTUALBOX_URL} "/Volumes/Macintosh\ HD"
+  VBoxManage extpack install ./Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}-${VBOX_PATCH}.vbox-extpack
   echo -e "\xe2\x9c\x93 VirtualBox is installed"
   rm ./Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}-${VBOX_PATCH}.vbox-extpack
 fi
