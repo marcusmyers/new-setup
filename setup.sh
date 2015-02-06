@@ -30,10 +30,6 @@ function install_dmg() {
   local target="$3"
   local dmg_path=$(mktemp -t ${name}_dmg)
 
-  if [ ! -z "$target" ]; then
-    target="/"
-  fi 
-
   echo "Installing: ${name}"
 
   # Download the package into the temporary directory
@@ -51,7 +47,7 @@ function install_dmg() {
   # Install. It will be the only pkg in there, so just find any pkg
   echo "-- Installing pkg..."
   pkg_path=$(find ${mount_point} -name '*.pkg' -mindepth 1 -maxdepth 1)
-  installer -pkg ${pkg_path} -target ${target} >/dev/null
+  installer -pkg ${pkg_path} -target ${target:"/"} >/dev/null
 
   # Unmount
   echo "-- Unmounting and ejecting DMG..."
@@ -83,7 +79,7 @@ fi
 # if not install it
 if ! type -p vboxmanage > /dev/null; then
   echo "--- Installing VirtualBox..."
-  install_dmg "VirtualBox" ${VIRTUALBOX_URL}
+  install_dmg "VirtualBox" ${VIRTUALBOX_URL} /Volumes/Macintosh\ HD
   curl -O ${VBOX_EXTPACK_URL}
   VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}-${VBOX_PATCH}.vbox-extpack
   echo -e "\xe2\x9c\x93 VirtualBox is installed"
