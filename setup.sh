@@ -7,7 +7,7 @@
 # useful unicode chars:
 #✓ \xe2\x9c\x93
 #✗ \xe2\x9c\x97
-http://download.virtualbox.org/virtualbox/4.3.20/Oracle_VM_VirtualBox_Extension_Pack-4.3.20-96996.vbox-extpack
+
 #--------------------------------------------------------------------
 # Modifiable variables, please set them via environmental variables.
 #--------------------------------------------------------------------
