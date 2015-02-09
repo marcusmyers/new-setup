@@ -24,34 +24,34 @@ ATOM_URL=${ATOM_URL:-"https://atom.io/download/mac"}
 
 # This function will download a DMG from a URL, mount it, find
 # the `pkg` in it, install that pkg, and unmount the package.
-function install_dmg() {
-  local name="$1"
-  local url="$2"
-  local dmg_path=$(mktemp -t ${name}_dmg)
+#function install_dmg() {
+#  local name="$1"
+#  local url="$2"
+#  local dmg_path=$(mktemp -t ${name}_dmg)
 
-  echo "Installing: ${name}"
+#  echo "Installing: ${name}"
 
   # Download the package into the temporary directory
-  echo "-- Downloading DMG..."
-  curl -L -o ${dmg_path} ${url} 2>/dev/null
+#  echo "-- Downloading DMG..."
+#  curl -L -o ${dmg_path} ${url} 2>/dev/null
 
-  chmod 777 ${dmg_path}
+#  chmod 777 ${dmg_path}
 
   # Mount it
-  echo "-- Mounting DMG..."
-  local plist_path=$(mktemp -t nacs_mac_bootstrap)
-  hdiutil attach -plist ${dmg_path} > ${plist_path}
-  mount_point=$(grep -E -o '/Volumes/[-.a-zA-Z0-9]+' ${plist_path})
+#  echo "-- Mounting DMG..."
+#  local plist_path=$(mktemp -t nacs_mac_bootstrap)
+#  hdiutil attach -plist ${dmg_path} > ${plist_path}
+#  mount_point=$(grep -E -o '/Volumes/[-.a-zA-Z0-9]+' ${plist_path})
 
   # Install. It will be the only pkg in there, so just find any pkg
-  echo "-- Installing pkg..."
-  pkg_path=$(find ${mount_point} -name '*.pkg' -mindepth 1 -maxdepth 1)
-  installer -pkg ${pkg_path} -target / >/dev/null
+#  echo "-- Installing pkg..."
+#  pkg_path=$(find ${mount_point} -name '*.pkg' -mindepth 1 -maxdepth 1)
+#  installer -pkg ${pkg_path} -target / >/dev/null
 
   # Unmount
-  echo "-- Unmounting and ejecting DMG..."
-  hdiutil eject ${mount_point} >/dev/null
-}
+#  echo "-- Unmounting and ejecting DMG..."
+#  hdiutil eject ${mount_point} >/dev/null
+#}
 
 # Make sure XCode Command Line Tools are installed
 # before we do anything else - install if not
@@ -104,10 +104,14 @@ fi
 # if not install it
 if [ ! -d /Applications/VirtualBox.app/ ]; then
   echo "--- Installing VirtualBox..."
-  curl -O ${VBOX_EXTPACK_URL}
-  install_dmg "VirtualBox" ${VIRTUALBOX_URL} 
-
+  curl -OL ${VBOX_EXTPACK_URL}
+  curl -OL ${VIRTUALBOX_URL} 
+  hdiutil attach VirtualBox-${VBOX_VERSION}-${VBOX_PATCH}-OSX.dmg
+  $diskNum=$(diskutil list | grep 'VirtualBox' | grep -o 'disk[0-9]')
   sleep 10
+  sudo installer -pkg /Volumes/VirtualBox/VirtualBox.pkg -target /
+  VBoxManage extpack install ./Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}-${VBOX_PATCH}.vbox-extpack 
+  hdiutil detach /dev/$diskNum
   echo -e "\xe2\x9c\x93 VirtualBox is installed"
 fi
 
@@ -115,9 +119,12 @@ fi
 # if not install it
 if ! type -p vagrant > /dev/null; then
   echo "--- Installing Vagrant..."
-  install_dmg "Vagrant" ${VAGRANT_URL}
-
+  curl -OL ${VAGRANT_URL}
+  hdiutil attach vagrant_${VAGRANT_VERSION}.dmg
+  $diskNum=$(diskutil list | grep 'VirtualBox' | grep -o 'disk[0-9]')
+  sudo installer -pkg /Volumes/Vagrant/Vagrant.pkg -target /
   sleep 10
+  hdiutil detach /dev/$diskNum
   echo -e "\xe2\x9c\x93 Vagrant is installed"
 fi
 
@@ -133,6 +140,7 @@ if [ ! -d "/Applications/Atom.app" ]; then
   sleep 5
   mv Atom.app /Applications/Atom.app
   sleep 5
+  rm atom-mac.zip
   echo -e "\xe2\x9c\x93 Atom is installed"
 fi 
 
@@ -185,9 +193,6 @@ echo -e "\xe2\x9c\x93 rspec-puppet is installed"
 echo "--- Installing puppet-blacksmith gem..."
 gem install puppet-blacksmith
 echo -e "\xe2\x9c\x93 puppet-blacksmith is installed"
-echo "--- Installing rake gem..."
-gem install rake
-echo -e "\xe2\x9c\x93 rake is installed"
 echo "--- Installing bundler gem..."
 gem install bundler
 echo -e "\xe2\x9c\x93 bundler is installed"
