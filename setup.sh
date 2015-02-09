@@ -107,11 +107,14 @@ if [ ! -d /Applications/VirtualBox.app/ ]; then
   curl -OL ${VBOX_EXTPACK_URL}
   curl -OL ${VIRTUALBOX_URL} 
   hdiutil attach VirtualBox-${VBOX_VERSION}-${VBOX_PATCH}-OSX.dmg
+  sleep 5
   $diskNum=$(diskutil list | grep 'VirtualBox' | grep -o 'disk[0-9]')
   sleep 10
   sudo installer -pkg /Volumes/VirtualBox/VirtualBox.pkg -target /
+  sleep 5
   VBoxManage extpack install ./Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}-${VBOX_PATCH}.vbox-extpack 
   hdiutil detach /dev/$diskNum
+  rm ./VirtualBox-${VBOX_VERSION}-${VBOX_PATCH}-OSX.dmg
   echo -e "\xe2\x9c\x93 VirtualBox is installed"
 fi
 
@@ -121,11 +124,16 @@ if ! type -p vagrant > /dev/null; then
   echo "--- Installing Vagrant..."
   curl -OL ${VAGRANT_URL}
   hdiutil attach vagrant_${VAGRANT_VERSION}.dmg
-  $diskNum=$(diskutil list | grep 'VirtualBox' | grep -o 'disk[0-9]')
+  sleep 5
+  $diskNum=$(diskutil list | grep 'Vagrant' | grep -o 'disk[0-9]')
   sudo installer -pkg /Volumes/Vagrant/Vagrant.pkg -target /
   sleep 10
   hdiutil detach /dev/$diskNum
+  rm ./vagrant_${VAGRANT_VERSION}.dmg
   echo -e "\xe2\x9c\x93 Vagrant is installed"
+  echo "--- Added all wanted/needed vagrant boxes..."
+  vagrant box add laravel/homestead
+  vagrant box add ubuntu/trusty64
 fi
 
 # Check if Atom is installed
@@ -140,7 +148,7 @@ if [ ! -d "/Applications/Atom.app" ]; then
   sleep 5
   mv Atom.app /Applications/Atom.app
   sleep 5
-  rm atom-mac.zip
+  rm ./atom-mac.zip
   echo -e "\xe2\x9c\x93 Atom is installed"
 fi 
 
