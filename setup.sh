@@ -1,4 +1,4 @@
-w#!/bin/bash
+#!/bin/bash
 
 #
 # This file must be ran as root
@@ -21,37 +21,6 @@ NODE_PACKAGE_URL=${NODE_PACKAGE_URL:-"http://nodejs.org/dist/${NODE_VERSION}/nod
 VIRTUALBOX_URL=${VIRTUALBOX_URL:-"http://download.virtualbox.org/virtualbox/${VBOX_VERSION}/VirtualBox-${VBOX_VERSION}-${VBOX_PATCH}-OSX.dmg"}
 VAGRANT_URL=${VAGRANT_URL:-"https://dl.bintray.com/mitchellh/vagrant/vagrant_${VAGRANT_VERSION}.dmg"}
 ATOM_URL=${ATOM_URL:-"https://atom.io/download/mac"}
-
-# This function will download a DMG from a URL, mount it, find
-# the `pkg` in it, install that pkg, and unmount the package.
-#function install_dmg() {
-#  local name="$1"
-#  local url="$2"
-#  local dmg_path=$(mktemp -t ${name}_dmg)
-
-#  echo "Installing: ${name}"
-
-  # Download the package into the temporary directory
-#  echo "-- Downloading DMG..."
-#  curl -L -o ${dmg_path} ${url} 2>/dev/null
-
-#  chmod 777 ${dmg_path}
-
-  # Mount it
-#  echo "-- Mounting DMG..."
-#  local plist_path=$(mktemp -t nacs_mac_bootstrap)
-#  hdiutil attach -plist ${dmg_path} > ${plist_path}
-#  mount_point=$(grep -E -o '/Volumes/[-.a-zA-Z0-9]+' ${plist_path})
-
-  # Install. It will be the only pkg in there, so just find any pkg
-#  echo "-- Installing pkg..."
-#  pkg_path=$(find ${mount_point} -name '*.pkg' -mindepth 1 -maxdepth 1)
-#  installer -pkg ${pkg_path} -target / >/dev/null
-
-  # Unmount
-#  echo "-- Unmounting and ejecting DMG..."
-#  hdiutil eject ${mount_point} >/dev/null
-#}
 
 # Make sure XCode Command Line Tools are installed
 # before we do anything else - install if not
